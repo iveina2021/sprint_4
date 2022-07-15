@@ -1,4 +1,4 @@
-package yandexBankCard;
+package ru.yandex.praktikum.card;
 
 public class Account {
     private static final String NAME_WITH_ONE_SPACE_PATTERN = "^[^\\s]+\\s[^\\s]+$";
