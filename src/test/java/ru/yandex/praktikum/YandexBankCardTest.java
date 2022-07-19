@@ -1,5 +1,6 @@
-package ru.yandex.praktikum.card;
+package ru.yandex.praktikum;
 
+import card.Account;
 import org.assertj.core.api.AbstractBooleanAssert;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -13,8 +14,8 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class YandexBankCardTest {
 
-    private String name;
-    private boolean expected;
+    private final String name;
+    private final boolean expected;
 
     public YandexBankCardTest(String name, boolean expected) {
         this.name = name;
@@ -31,14 +32,14 @@ public class YandexBankCardTest {
                 {"ТимотиШаламе", false}, // checkNameHasNotWhitespaceBetweenNameAndSurname
                 {"  Тимоти Шаламе", false}, // checkNameHasWhitespaceBeforeName
                 {"Тимоти Шаламе  ", false}, // checkNameHasWhitespaceAfterName
-                {null, false}//
+                {null, false} // checkNameIsNull
         };
         return Arrays.asList(data);
     }
 
     @Test
     public void cardTest() {
-       Account account = new Account(name);
+        Account account = new Account(name);
         boolean actual = account.checkNameToEmboss();
         Assertions.assertThat(actual).isEqualTo(expected);
     }

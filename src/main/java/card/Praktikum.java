@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.card;
+package card;
 
 public class Praktikum {
 
