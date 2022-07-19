@@ -10,6 +10,9 @@ public class Account {
     }
 
     public boolean checkNameToEmboss() {
+        if (name == null) {
+            return false;
+        }
         if (name.length() >= 3 && name.length() <= 19 && name.matches(NAME_WITH_ONE_SPACE_PATTERN)) {
             return true;
         } else {

@@ -30,14 +30,15 @@ public class YandexBankCardTest {
                 {"Тимоти  Шаламе", false}, // checkNameHasMoreThanOneWhitespaceBetweenNameAndSurname
                 {"ТимотиШаламе", false}, // checkNameHasNotWhitespaceBetweenNameAndSurname
                 {"  Тимоти Шаламе", false}, // checkNameHasWhitespaceBeforeName
-                {"Тимоти Шаламе  ", false} // checkNameHasWhitespaceAfterName
+                {"Тимоти Шаламе  ", false}, // checkNameHasWhitespaceAfterName
+                {null, false}//
         };
         return Arrays.asList(data);
     }
 
     @Test
     public void cardTest() {
-        Account account = new Account(name);
+       Account account = new Account(name);
         boolean actual = account.checkNameToEmboss();
         Assertions.assertThat(actual).isEqualTo(expected);
     }
