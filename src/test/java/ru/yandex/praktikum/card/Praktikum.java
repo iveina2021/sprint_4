@@ -3,7 +3,8 @@ package ru.yandex.praktikum.card;
 public class Praktikum {
 
     public static void main(String[] args) {
-        Account account = new Account("Тимоти Шаламе");
+        String name = args[0];
+        Account account = new Account(name);
         account.checkNameToEmboss();
     }
 }
