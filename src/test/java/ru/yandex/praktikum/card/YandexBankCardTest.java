@@ -1,64 +1,44 @@
 package ru.yandex.praktikum.card;
 
+import org.assertj.core.api.AbstractBooleanAssert;
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+@RunWith(Parameterized.class)
 public class YandexBankCardTest {
 
-    @Test
-    public void checkNameLengthIsCorrect() {
-        Account account = new Account("Тимоти Шаламе");
-        boolean result = account.checkNameToEmboss();
-        Assertions.assertThat(result).isTrue();
+    private String name;
+    private boolean expected;
+
+    public YandexBankCardTest(String name, boolean expected) {
+        this.name = name;
+        this.expected = expected;
+    }
+
+    @Parameterized.Parameters(name = "{index}: Name {0} should be {1}")
+    public static Collection<Object[]> data() {
+        Object[][] data = new Object[][]{
+                {"Тимоти Шаламе", true}, // checkNameLengthIsCorrect, checkNameHasOnlyOneWhitespaceBetweenNameAndSurname
+                {"Ти", false}, // checkNameLengthShouldHaveMoreThan3Symbols
+                {"Тимоти Шаламешаламешаламе", false}, // checkNameLengthShouldHaveLessThan19Symbols
+                {"Тимоти  Шаламе", false}, // checkNameHasMoreThanOneWhitespaceBetweenNameAndSurname
+                {"ТимотиШаламе", false}, // checkNameHasNotWhitespaceBetweenNameAndSurname
+                {"  Тимоти Шаламе", false}, // checkNameHasWhitespaceBeforeName
+                {"Тимоти Шаламе  ", false} // checkNameHasWhitespaceAfterName
+        };
+        return Arrays.asList(data);
     }
 
     @Test
-    public void checkNameLengthShouldHaveMoreThan3Symbols() {
-        Account account = new Account("Ти");
-        boolean result = account.checkNameToEmboss();
-        Assertions.assertThat(result).isFalse();
+    public void cardTest() {
+        Account account = new Account(name);
+        boolean actual = account.checkNameToEmboss();
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
-
-    @Test
-    public void checkNameLengthShouldHaveLessThan19Symbols() {
-        Account account = new Account("Тимоти Шаламешаламешаламе");
-        boolean result = account.checkNameToEmboss();
-        Assertions.assertThat(result).isFalse();
-    }
-
-    @Test
-    public void checkNameHasOnlyOneWhitespaceBetweenNameAndSurname() {
-        Account account = new Account("Тимоти Шаламе");
-        boolean result = account.checkNameToEmboss();
-        Assertions.assertThat(result).isTrue();
-    }
-
-    @Test
-    public void checkNameHasMoreThanOneWhitespaceBetweenNameAndSurname() {
-        Account account = new Account("Тимоти  Шаламе");
-        boolean result = account.checkNameToEmboss();
-        Assertions.assertThat(result).isFalse();
-    }
-
-    @Test
-    public void checkNameHasNotWhitespaceBetweenNameAndSurname() {
-        Account account = new Account("ТимотиШаламе");
-        boolean result = account.checkNameToEmboss();
-        Assertions.assertThat(result).isFalse();
-    }
-
-    @Test
-    public void checkNameHasWhitespaceBeforeName() {
-        Account account = new Account("  Тимоти Шаламе");
-        boolean result = account.checkNameToEmboss();
-        Assertions.assertThat(result).isFalse();
-    }
-
-    @Test
-    public void checkNameHasWhitespaceAfterName() {
-        Account account = new Account("Тимоти Шаламе  ");
-        boolean result = account.checkNameToEmboss();
-        Assertions.assertThat(result).isFalse();
-    }
-
 }
